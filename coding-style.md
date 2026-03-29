@@ -664,6 +664,27 @@ begin
 end
 ```
 
+### 6. __Avoid assigning logic directly to wire when defining them__:
+
+It is preferred to avoid assigning logic directly to `wire` when defining them.
+
+As in a project if a few signals are assigned value using assign statements and a few signals are assigned value directly in the `wire` definition, you have to continuosly scroll up and down to check which signals are defined using assign statements and which are defined using direct assignment in the `wire` definition, which can be a bit annoying and can also lead to missing some signals.
+
+Avoid:
+```verilog
+wire signal_a = signal_b & signal_c;
+```
+Preferred:
+```verilog
+wire signal_a;
+
+
+...
+
+
+assign signal_a = signal_b & signal_c;
+```
+
 This concludes the Writing Readable Code section.
 
 ---
