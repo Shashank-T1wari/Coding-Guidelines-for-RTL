@@ -179,10 +179,12 @@ Here's an example of the directory structure:
 ```
 project_root/
 ├── RTL/
-│   ├── system.v/
-│       ├── wrapper_module_1.v
+│   ├── system.v
+|   ├── <Respective .v files called directly by system.v>
+|   ├── wrapper_module_1/
+│       ├── wrapper_module_1.v // Calls wrapper_module_2 and wrapper_module_3
 │       ├── file_a.v
-│       └── file_b.v
+│       ├── file_b.v
 │       └── wrapper_module_2/
 │           ├── wrapper_module_2.v
 │           ├── file_c.v
@@ -237,7 +239,7 @@ Here is a template for the comment header:
 ```verilog
 `timescale 1ns / 1ps
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Engineer: Tanish A Shet, Shashank Tiwari, Samyak Nidhi
+// Engineer: <Replace with your full name>
 // Last Modified: 29.03.2026
 // Module Name: <Replace with module name>
 // Project Name: Silicon SoC kNN
@@ -298,7 +300,7 @@ An example of this is shown below for the signal `o_rx_error`:
 
 ![alt text](image-12.png)
 
-We see that only in the last image the signal name is changed from `o_rx_error` to `UART_rx_error`, as the final top module also has a signal called `FIFO_rx_error` and changing the name to `UART_rx_error` helps us easily identify which signal comes from which module when viewing the schematic.
+We see that only in the last image the signal name is changed from `o_rx_error` to `UART_rx_error`, as the final top module may also have a signal called `FIFO_rx_error` and changing the name to `UART_rx_error` helps us easily identify which signal comes from which module when viewing the schematic.
 
 ### 2. __Comments__:
 
@@ -346,7 +348,7 @@ module boot_controller
 	input		clk,
 	input		load_en, resetn_in, //mapped to external switch
 	input 		UART_load_done, FIFO_load_done, boot_load_done,
-   	input 		[1:0] mode_sel, //mapped to external switch
+   	input [1:0] mode_sel, //mapped to external switch
    	input 		UART_load_busy,
    	input 		FIFO_load_busy,
    	input 		boot_load_busy,
@@ -426,31 +428,31 @@ wire done_any;
 // boot_controller instance //
 //----------------------------//
 boot_controller u_boot_ctrl (
-	.clk(clk),
-   	.resetn_in(resetn_in),
-   	.load_en(load_en),
-   	.mode_sel(mode_sel),
+	.clk			(clk),
+   	.resetn_in		(resetn_in),
+   	.load_en		(load_en),
+   	.mode_sel		(mode_sel),
 
    	// UART signals (stub when disabled)
-   	.UART_load_done(UART_ld_done),
-   	.UART_load_busy(UART_load_busy),
-   	.UART_rx_en(UART_rx_enable),
+   	.UART_load_done	(UART_ld_done),
+   	.UART_load_busy	(UART_load_busy),
+   	.UART_rx_en		(UART_rx_enable),
 
    	// FIFO signals (stub when disabled)
-   	.FIFO_load_done(FIFO_ld_done),
-   	.FIFO_load_busy(FIFO_load_busy),
-   	.FIFO_rx_en(FIFO_rx_en),
+   	.FIFO_load_done (FIFO_ld_done),
+   	.FIFO_load_busy (FIFO_load_busy),
+   	.FIFO_rx_en		(FIFO_rx_en),
 
    	// Boot signals (stub when disabled)
-   	.boot_load_done(load_done_core),
-   	.boot_load_busy(load_busy_core),
-   	.boot_en(boot_en),
+   	.boot_load_done (load_done_core),
+   	.boot_load_busy (load_busy_core),
+   	.boot_en		(boot_en),
 
    	// Outputs
    	.resetn_core_req(resetn_core_req),
-   	.fw_load_en(fw_load_en),
-   	.load_done(load_done),
-   	.load_busy(load_busy)
+   	.fw_load_en		(fw_load_en),
+   	.load_done		(load_done),
+   	.load_busy		(load_busy)
 );
 ```
 
@@ -485,6 +487,8 @@ This style allows for clear separation of the different signals being ANDed toge
 ### 4. __Brackets and Spaces__:
 
 Brackets `()` are mainly encountered in module definitions and submodule instantiations in Verilog code.
+
+For __Spaces__, in module keep all the signal names in the same indentation level and use spaces to align the port names and parameter names vertically for better readability.
 
 In general, for module definitions, keep the braces on separate lines for both parameter list and port list, and align the port names and parameter names vertically for better readability. For example:
 
@@ -531,7 +535,7 @@ module SRAM_controller
 );
 ```
 
-For submodule instantiations, however, the preferred style is to keep the opening bracket on the same line as the module name and align the port connections vertically for better readability. For example:
+For submodule instantiations, however, the preferred style is to keep the opening bracket on the same line as the module name and align the port connections vertically for better readability.
 
 ```verilog
 //-------------------------------//
@@ -558,8 +562,6 @@ controller_path_mux #(
 
 #### NOTE:
 > When calling the submodule use `u_` as prefix for the instance name to clearly indicate that it is a module instance. For example, `u_controller_path_mux` for an instance of the `controller_path_mux` module. This is a common convention in Verilog coding style and helps to easily identify module instances in the code.
-
-For Spaces, in module keep all the signal names in the same indentation level and use spaces to align the port names and parameter names vertically for better readability. As shown in the examples above.
 
 ### 5. __`begin` and `end` placement for `if-else` and `case` statements__:
 
@@ -780,7 +782,7 @@ Use the same template as mentioned in the comment header above or copy the one g
 ```verilog
 `timescale 1ns / 1ps
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Engineer: Tanish A Shet, Shashank Tiwari, Samyak Nidhi
+// Engineer: <Replace with your full name>
 // Last Modified: 29.03.2026
 // Module Name: tb_<Replace with module name being tested>
 // Project Name: Silicon SoC kNN
