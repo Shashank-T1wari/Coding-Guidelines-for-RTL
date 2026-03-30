@@ -542,8 +542,8 @@ For submodule instantiations, however, the preferred style is to keep the openin
 // controller_path_mux instance  //
 //-------------------------------//
 controller_path_mux #(
-	.N(N),
-	.W(W)
+	.N				(N),
+	.W				(W)
 ) u_controller_path_mux (
 	.mode_sel		(mode_sel),
 	.fw_load_en		(fw_load_en),
@@ -738,8 +738,8 @@ When instantiating the Unit Under Test (UUT) in the testbench, follow the same p
 
 ```verilog
 SRAM_controller #(
-	.N(N),
-	.W(W)
+	.N				  (N),
+	.W 				  (W)
 	) dut (
 	.clk              (clk),
 	.resetn_in        (resetn_in),
@@ -766,7 +766,7 @@ SRAM_controller #(
 	);
 
 addr_decoder #(
-	.N(N)
+	.N					  (N)
 	) u_addr_decoder (
 	.fw_load_en           (fw_load_en),
 	.core_decoder_en      (core_decoder_en),
@@ -809,7 +809,7 @@ Here is a template for the comment header for open source IPs:
 ////////////////////////////OPEN SOURCE MODULE////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////
-// Engineer: Tanish A Shet, Samyak Nidhi, Shashank Tiwari
+// Engineer: <Replace with original author name if available, otherwise your full name>
 // Update Date: 29.03.2026
 // Module Name: <Replace with module name>
 // Project Name: Silicon SoC KNN
