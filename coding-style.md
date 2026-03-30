@@ -343,17 +343,17 @@ Here is an example of all the above tips put together in a single code snippet:
 ```verilog
 module boot_controller
 (
-	input clk,
-	input load_en, resetn_in, //mapped to external switch
-	input UART_load_done, FIFO_load_done, boot_load_done,
-   	input [1:0] mode_sel, //mapped to external switch
-   	input UART_load_busy,
-   	input FIFO_load_busy,
-   	input boot_load_busy,
-   	output reg resetn_core_req, //Active low reset signal to release core
-   	output reg boot_en, fw_load_en, UART_rx_en,FIFO_rx_en,
-   	output reg load_busy,
-   	output reg load_done
+	input		clk,
+	input		load_en, resetn_in, //mapped to external switch
+	input 		UART_load_done, FIFO_load_done, boot_load_done,
+   	input 		[1:0] mode_sel, //mapped to external switch
+   	input 		UART_load_busy,
+   	input 		FIFO_load_busy,
+   	input 		boot_load_busy,
+   	output reg 	resetn_core_req, //Active low reset signal to release core
+   	output reg 	boot_en, fw_load_en, UART_rx_en,FIFO_rx_en,
+   	output reg 	load_busy,
+   	output reg 	load_done
 );
 
 
@@ -491,43 +491,43 @@ In general, for module definitions, keep the braces on separate lines for both p
 ```verilog
 module SRAM_controller
 #(
-	parameter N = 12,
-	parameter W = 32
+	parameter 			N = 12,
+	parameter 			W = 32
 )(
-	input clk,
-	input resetn_in,
-	input load_en,
-	input i_rx,
-	input [1:0] mode_sel,
+	input 				clk,
+	input 				resetn_in,
+	input 				load_en,
+	input 				i_rx,
+	input [1:0] 		mode_sel,
 
    	//Signals from Core
-   	input wire load_busy_core, // Active when flash -> core -> SRAM load is in progress
-   	input wire load_done_core, // Active when flash -> core -> SRAM load is done
-   	input wire [W-1:0] CORE_WDATA,
-   	input wire [31:0] CORE_ADDR,
+   	input wire 			load_busy_core, // Active when flash -> core -> SRAM load is in progress
+   	input wire 			load_done_core, // Active when flash -> core -> SRAM load is done
+   	input wire [W-1:0] 	CORE_WDATA,
+   	input wire [31:0] 	CORE_ADDR,
 
    	//Signals to Core
-   	output wire sync_core_resetn, // Synchronous reset to core (active low)
-   	output wire boot_en, // Active during firmware loading (flash -> core -> SRAM)
+   	output wire 		sync_core_resetn, // Synchronous reset to core (active low)
+   	output wire 		boot_en, // Active during firmware loading (flash -> core -> SRAM)
 
    	//Signals to address decoder
-   	output wire [31:0] SRAM_ADDR_RAW, // Raw address to SRAM (before any address translation)
-   	output wire fw_load_en,
+   	output wire [31:0] 	SRAM_ADDR_RAW, // Raw address to SRAM (before any address translation)
+   	output wire 		fw_load_en,
 
    	//Signals to SRAM (after MUX selection)
-   	output wire [31:0] SRAM_WDATA, // Final write data to SRAM
+   	output wire [31:0] 	SRAM_WDATA, // Final write data to SRAM
 
    	// Flags and status outputs
-   	output load_busy,
-   	output load_done,
-   	output o_rts,
-   	output UART_check_start,
-   	output UART_rx_error,
-   	output header_fail,
+   	output 				load_busy,
+   	output 				load_done,
+   	output 				o_rts,
+   	output 				UART_check_start,
+   	output 				UART_rx_error,
+   	output 				header_fail,
 
    	// BRAM IP Specific Interfacing Signals
-   	output sram_valid_uart,
-   	output sram_wea_uart
+   	output 				sram_valid_uart,
+   	output 				sram_wea_uart
 );
 ```
 
@@ -541,23 +541,25 @@ controller_path_mux #(
 	.N(N),
 	.W(W)
 ) u_controller_path_mux (
-	.mode_sel(mode_sel),
-	.fw_load_en(fw_load_en),
-	.CORE_WDATA(CORE_WDATA),
-	.CORE_ADDR(CORE_ADDR),
+	.mode_sel		(mode_sel),
+	.fw_load_en		(fw_load_en),
+	.CORE_WDATA		(CORE_WDATA),
+	.CORE_ADDR		(CORE_ADDR),
 	.UART_SRAM_WDATA(UART_SRAM_WDATA),
-	.UART_SRAM_ADDR(UART_SRAM_ADDR),
+	.UART_SRAM_ADDR	(UART_SRAM_ADDR),
 	.FIFO_SRAM_WDATA(FIFO_SRAM_WDATA),
-	.FIFO_SRAM_ADDR(FIFO_SRAM_ADDR),
-	.FW_ADDR(FW_ADDR),
-	.FW_WDATA(FW_WDATA),
-	.SRAM_ADDR_RAW(SRAM_ADDR_RAW),
-	.SRAM_WDATA(SRAM_WDATA)
+	.FIFO_SRAM_ADDR	(FIFO_SRAM_ADDR),
+	.FW_ADDR		(FW_ADDR),
+	.FW_WDATA		(FW_WDATA),
+	.SRAM_ADDR_RAW	(SRAM_ADDR_RAW),
+	.SRAM_WDATA		(SRAM_WDATA)
 );
 ```
 
 #### NOTE:
 > When calling the submodule use `u_` as prefix for the instance name to clearly indicate that it is a module instance. For example, `u_controller_path_mux` for an instance of the `controller_path_mux` module. This is a common convention in Verilog coding style and helps to easily identify module instances in the code.
+
+For Spaces, in module keep all the signal names in the same indentation level and use spaces to align the port names and parameter names vertically for better readability. As shown in the examples above.
 
 ### 5. __`begin` and `end` placement for `if-else` and `case` statements__:
 
@@ -726,6 +728,51 @@ Here is an example of a testbench comment header with detailed description of th
 // Throughout: scoreboard counters plus SV assertions monitor loader gating, path ownership,
 // address translation, and reset behavior continuously.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+```
+
+### UUT in Testbench
+
+When instantiating the Unit Under Test (UUT) in the testbench, follow the same principle done for module. Keep the indentation of signal connections at the same level and align the port connections vertically for better readability.
+
+```verilog
+SRAM_controller #(
+	.N(N),
+	.W(W)
+	) dut (
+	.clk              (clk),
+	.resetn_in        (resetn_in),
+	.load_en          (load_en),
+	.i_rx             (i_rx),
+	.mode_sel         (mode_sel),
+	.load_busy_core   (load_busy_core),
+	.load_done_core   (load_done_core),
+	.CORE_WDATA       (CORE_WDATA),
+	.CORE_ADDR        (CORE_ADDR),
+	.sync_core_resetn (sync_core_resetn),
+	.boot_en          (boot_en),
+	.SRAM_ADDR_RAW    (SRAM_ADDR_RAW),
+	.fw_load_en       (fw_load_en),
+	.SRAM_WDATA       (SRAM_WDATA),
+	.load_busy        (load_busy),
+	.load_done        (load_done),
+	.o_rts            (o_rts),
+	.UART_check_start (UART_check_start),
+	.UART_rx_error    (UART_rx_error),
+	.header_fail      (header_fail),
+	.sram_valid_uart  (sram_valid_uart),
+	.sram_wea_uart    (sram_wea_uart)
+	);
+
+addr_decoder #(
+	.N(N)
+	) u_addr_decoder (
+	.fw_load_en           (fw_load_en),
+	.core_decoder_en      (core_decoder_en),
+	.core_decoder_en_remap(core_decoder_en_remap),
+	.mode_sel             (mode_sel),
+	.SRAM_ADDR_RAW        (SRAM_ADDR_RAW),
+	.SRAM_ADDR            (decoded_SRAM_ADDR)
+	);
 ```
 
 Use the same template as mentioned in the comment header above or copy the one given below:
