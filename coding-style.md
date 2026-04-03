@@ -48,8 +48,8 @@ In short, 8-character indents make things easier to read and have the added bene
 - Set __Tab Size__ to __8__
 - Click __Apply__ and __OK__.
 
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](images/image-1.png)
+![alt text](images/image-2.png)
 
 #### 2) Visual Studio Code:
 - Open __Settings__ (File > Preferences > Settings)
@@ -57,8 +57,8 @@ In short, 8-character indents make things easier to read and have the added bene
 - Set __Tab Size__ to __8__.
 - Ensure that __Insert Spaces__ is unchecked if you want to use actual tab characters instead of spaces.
 
-![alt text](image-3.png)
-![alt text](image-4.png)
+![alt text](images/image-3.png)
+![alt text](images/image-4.png)
 
 ### 3. Trimming Whitespaces -
 
@@ -74,7 +74,7 @@ Vivado does not have a built-in feature to automatically trim trailing whitespac
 - Search for __Trim Trailing Whitespace__ in the search bar.
 - Check the box for __Trim Trailing Whitespace__ to enable it.
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 #### 3) Git Hook:
 You can set up a Git pre-commit hook to automatically trim trailing whitespace before committing. Use one of the following based on your OS.
@@ -265,15 +265,15 @@ It also makes it easier to debug and maintain the code, as any issues can be iso
 
 Here is example of schematic view without clean wrapper modules:
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 Compared to one with clean wrapper modules:
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 Now right now this may not seem like a big deal, but as the design grows in complexity, not using clean wrapper modules can lead to a very messy and difficult to understand schematic view:
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 ---
 
@@ -292,13 +292,13 @@ If a signal is pulled from a lower-level module to a higher-level wrapper, it is
 
 An example of this is shown below for the signal `o_rx_error`:
 
-![alt text](image-9.png)
+![alt text](images/image-9.png)
 
-![alt text](image-10.png)
+![alt text](images/image-10.png)
 
-![alt text](image-11.png)
+![alt text](images/image-11.png)
 
-![alt text](image-12.png)
+![alt text](images/image-12.png)
 
 We see that only in the last image the signal name is changed from `o_rx_error` to `UART_rx_error`, as the final top module may also have a signal called `FIFO_rx_error` and changing the name to `UART_rx_error` helps us easily identify which signal comes from which module when viewing the schematic.
 
